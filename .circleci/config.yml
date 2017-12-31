@@ -1,0 +1,14 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: jtwp470/aws-tools-with-docker
+    steps:
+      - run:
+          name: Show aws cli version
+          command: |
+            aws --version
+      - run:
+          name: Show aws eb version
+          command: |
+            eb --version

@@ -1,5 +1,5 @@
 # AWS tools with Alpine Linux
-[![CircleCI](https://img.shields.io/circleci/project/github/jtwp470/aws-tools-with-docker.svg?style=flat-square)](https://circleci.com/gh/jtwp470/aws-tools-with-docker)
+[![CircleCI](https://img.shields.io/circleci/project/github/ryosan-470/aws-tools-with-docker.svg?style=flat-square)](https://circleci.com/gh/ryosan-470/aws-tools-with-docker)
 [![Docker Build Status](https://img.shields.io/docker/build/jtwp470/aws-tools-with-docker.svg?style=flat-square)](https://hub.docker.com/r/jtwp470/aws-tools-with-docker/)
 [![Docker Automated build](https://img.shields.io/docker/automated/jtwp470/aws-tools-with-docker.svg?style=flat-square)](https://hub.docker.com/r/jtwp470/aws-tools-with-docker/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/jtwp470/aws-tools-with-docker.svg?style=flat-square)](https://hub.docker.com/r/jtwp470/aws-tools-with-docker/)
@@ -15,16 +15,16 @@ Use this image with CircleCI 2.0 like this `.circleci/config.yml`
 ```yaml
 version: 2
 jobs:
-  test:
+  build:
     docker:
       - image: jtwp470/aws-tools-with-docker
-  steps:
-    - run:
-        name: Show aws cli version
-        command: |
-          aws --version
-    - run:
-        name: Show aws eb version
-        command: |
-          eb --version
+    steps:
+      - run:
+          name: Show aws cli version
+          command: |
+            aws --version
+      - run:
+          name: Show aws eb version
+          command: |
+            eb --version
 ```
