@@ -28,7 +28,12 @@ workflows:
   test-and-docker-build:
     jobs:
       - test
-      - docker-build
+      - docker-build:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
   scheduled-workflow:
     triggers:
       - schedule:
