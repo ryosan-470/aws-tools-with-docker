@@ -28,6 +28,7 @@ workflows:
   test-and-docker-build:
     jobs:
       - test
+      - docker-build
   scheduled-workflow:
     triggers:
       - schedule:
