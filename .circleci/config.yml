@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     docker:
       - image: jtwp470/aws-tools-with-docker
     steps:
@@ -12,3 +12,28 @@ jobs:
           name: Show aws eb version
           command: |
             eb --version
+
+  docker-build:
+    docker:
+      - image: docker:17.11.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: docker build -t jtwp470/aws-tools-with-docker .
+      - run: docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}
+      - run: docker push jtwp470/aws-tools-with-docker
+
+workflows:
+  version: 2
+  test-and-docker-build:
+    jobs:
+      - test
+  scheduled-workflow:
+    triggers:
+      - schedule:
+          cron: "0 4 * * 0"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - docker-build
