@@ -42,4 +42,7 @@ workflows:
             branches:
               only: master
     jobs:
-      - docker-build
+      - test
+      - docker-build:
+          requires:
+            - test
