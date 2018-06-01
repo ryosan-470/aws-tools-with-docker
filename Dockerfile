@@ -7,11 +7,12 @@ ENV DOCKER_COMPOSE_VERSION 1.21.1
 ENV DOCKER_MACHINE_VERSION 0.14.0
 ENV AWS_ECS_CLI_VERSION 1.5.0
 
-
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     openssh-client \
     ca-certificates \
     python-pip \
+    python-setuptools \
+    libyaml-dev \
     curl \
     &&  rm -rf /var/lib/apt/lists/*
 RUN curl -L https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz -o docker.tgz; \

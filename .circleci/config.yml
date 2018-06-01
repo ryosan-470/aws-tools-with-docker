@@ -16,6 +16,7 @@ jobs:
       - run:
           name: Show docker tool version
           command: |
+            docker run --rm jtwp470/aws-tools-with-docker docker --version
             docker run --rm jtwp470/aws-tools-with-docker docker-compose --version
             docker run --rm jtwp470/aws-tools-with-docker docker-machine --version
 
