@@ -2,16 +2,19 @@ version: 2
 jobs:
   test:
     docker:
-      - image: jtwp470/aws-tools-with-docker
+      - image: docker:18.05.0-ce-git
     steps:
+      - checkout
+      - setup_remote_docker
+      - run: docker build -t jtwp470/aws-tools-with-docker .
       - run:
           name: Show aws cli version
           command: |
-            aws --version
+            docker run --rm jtwp470/aws-tools-with-docker aws --version
       - run:
           name: Show aws eb version
           command: |
-            eb --version
+            docker run --rm jtwp470/aws-tools-with-docker eb --version
 
   docker-build:
     docker:
