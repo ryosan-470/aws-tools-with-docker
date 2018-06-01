@@ -27,7 +27,9 @@ jobs:
       - setup_remote_docker
       - run: docker build -t jtwp470/aws-tools-with-docker .
       - run: echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USER} --password-stdin
-      - run: docker push jtwp470/aws-tools-with-docker
+      - deploy:
+          command: |
+            docker push jtwp470/aws-tools-with-docker
 
 workflows:
   version: 2
