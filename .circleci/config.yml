@@ -8,13 +8,11 @@ jobs:
       - setup_remote_docker
       - run: docker build -t jtwp470/aws-tools-with-docker .
       - run:
-          name: Show aws cli version
+          name: Show aws tool version
           command: |
             docker run --rm jtwp470/aws-tools-with-docker aws --version
-      - run:
-          name: Show aws eb version
-          command: |
             docker run --rm jtwp470/aws-tools-with-docker eb --version
+            docker run --rm jtwp470/aws-tools-with-docker ecs-cli --version
       - run:
           name: Show docker tool version
           command: |
