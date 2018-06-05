@@ -1,48 +1,42 @@
 version: 2
 jobs:
-  test:
+  build:
     docker:
       - image: docker:18.05.0-ce-git
+    environment:
+      - IMAGE_NAME: jtwp470/aws-tools-with-docker
     steps:
       - checkout
       - setup_remote_docker
-      - run: docker build -t jtwp470/aws-tools-with-docker .
+      - run: docker pull ${IMAGE_NAME}
+      - run: docker build -t ${IMAGE_NAME} .
       - run:
           name: Show aws tool version
           command: |
-            docker run --rm jtwp470/aws-tools-with-docker aws --version
-            docker run --rm jtwp470/aws-tools-with-docker eb --version
-            docker run --rm jtwp470/aws-tools-with-docker ecs-cli --version
+            docker run --rm ${IMAGE_NAME} aws --version
+            docker run --rm ${IMAGE_NAME} eb --version
+            docker run --rm ${IMAGE_NAME} ecs-cli --version
       - run:
           name: Show docker tool version
           command: |
-            docker run --rm jtwp470/aws-tools-with-docker docker --version
-            docker run --rm jtwp470/aws-tools-with-docker docker-compose --version
-            docker run --rm jtwp470/aws-tools-with-docker docker-machine --version
-
-  docker-build:
-    docker:
-      - image: docker:18.05.0-ce-git
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run: docker build -t jtwp470/aws-tools-with-docker .
-      - run: echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USER} --password-stdin
+            docker run --rm ${IMAGE_NAME} docker --version
+            docker run --rm ${IMAGE_NAME} docker-compose --version
+            docker run --rm ${IMAGE_NAME} docker-machine --version
       - deploy:
+          name: Push Docker image
           command: |
-            docker push jtwp470/aws-tools-with-docker
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USER} --password-stdin
+              docker tag ${IMAGE_NAME} ${IMAGE_NAME}:${CIRCLE_SHA1}
+              docker push ${IMAGE_NAME}
+              docker push ${IMAGE_NAME}:${CIRCLE_SHA1}
+            fi
 
 workflows:
   version: 2
-  test-and-docker-build:
+  test-docker-build-and-push:
     jobs:
-      - test
-      - docker-build:
-          requires:
-            - test
-          filters:
-            branches:
-              only: master
+      - build
   scheduled-workflow:
     triggers:
       - schedule:
@@ -51,7 +45,4 @@ workflows:
             branches:
               only: master
     jobs:
-      - test
-      - docker-build:
-          requires:
-            - test
+      - build
