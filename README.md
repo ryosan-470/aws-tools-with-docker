@@ -9,12 +9,11 @@ This image is optimized for CircleCI 2.0 included with [AWS CLI](https://aws.ama
 
 
 ## Tools
+This image has [pre-installed tools](https://circleci.com/docs/2.0/circleci-images/#pre-installed-tools) which has pre-build CircleCI images and the following packages are installed.
 
 - [AWS CLI](https://aws.amazon.com/cli/)
 - [AWS Elastic Beanstalk CLI (EB CLI)](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3.html)
 - [Amazon ECS CLI](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI.html)
-- [docker](https://docs.docker.com/)
-- [docker-compose](https://docs.docker.com/compose/)
 - [docker-machine](https://docs.docker.com/machine/)
 
 ## Usage
