@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python-setuptools \
     libyaml-dev \
     curl \
+    git \
     &&  rm -rf /var/lib/apt/lists/*
 RUN curl -L https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz -o docker.tgz; \
     tar xvzof docker.tgz \
